@@ -1,0 +1,92 @@
+[
+  {
+    "item":"Cappuccino",
+    "timestamp":"2026-10-15 07:00:00",
+    "total_revenue":827.31
+  },
+  {
+    "item":"Cappuccino",
+    "timestamp":"2026-10-15 08:00:00",
+    "total_revenue":827.78
+  },
+  {
+    "item":"Cappuccino",
+    "timestamp":"2026-10-15 09:00:00",
+    "total_revenue":154.47
+  },
+  {
+    "item":"Croissant",
+    "timestamp":"2026-10-15 07:00:00",
+    "total_revenue":810.96
+  },
+  {
+    "item":"Croissant",
+    "timestamp":"2026-10-15 08:00:00",
+    "total_revenue":812.14
+  },
+  {
+    "item":"Croissant",
+    "timestamp":"2026-10-15 09:00:00",
+    "total_revenue":211.02
+  },
+  {
+    "item":"Espresso",
+    "timestamp":"2026-10-15 07:00:00",
+    "total_revenue":658.64
+  },
+  {
+    "item":"Espresso",
+    "timestamp":"2026-10-15 08:00:00",
+    "total_revenue":763.25
+  },
+  {
+    "item":"Espresso",
+    "timestamp":"2026-10-15 09:00:00",
+    "total_revenue":119.88
+  },
+  {
+    "item":"Latte",
+    "timestamp":"2026-10-15 07:00:00",
+    "total_revenue":791.01
+  },
+  {
+    "item":"Latte",
+    "timestamp":"2026-10-15 08:00:00",
+    "total_revenue":1076.94
+  },
+  {
+    "item":"Latte",
+    "timestamp":"2026-10-15 09:00:00",
+    "total_revenue":163.22
+  },
+  {
+    "item":"Muffin",
+    "timestamp":"2026-10-15 07:00:00",
+    "total_revenue":894.87
+  },
+  {
+    "item":"Muffin",
+    "timestamp":"2026-10-15 08:00:00",
+    "total_revenue":877.22
+  },
+  {
+    "item":"Muffin",
+    "timestamp":"2026-10-15 09:00:00",
+    "total_revenue":172.01
+  },
+  {
+    "item":"Sandwich",
+    "timestamp":"2026-10-15 07:00:00",
+    "total_revenue":1764.05
+  },
+  {
+    "item":"Sandwich",
+    "timestamp":"2026-10-15 08:00:00",
+    "total_revenue":1332.59
+  },
+  {
+    "item":"Sandwich",
+    "timestamp":"2026-10-15 09:00:00",
+    "total_revenue":255.7
+  }
+]
