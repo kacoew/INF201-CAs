@@ -1,12 +1,13 @@
-* 4b93634 - Kacoew, 10 seconds ago : newpdf
-* 54b9b0e - Kacoew, 8 minutes ago : pdf og git_log
-* 86008d7 - Kacoew, 15 minutes ago : Task 4-5 texts, fixed tests, requirements.txt, rerun outputs
-* 9fa9c82 - Seline Heggelund Knutsen, 53 minutes ago : small change
-* 9182201 - Seline Heggelund Knutsen, 59 minutes ago : Ai erklæring
+* 15888de - Kacoew, 14 minutes ago : new git log
+* 4b93634 - Kacoew, 14 minutes ago : newpdf
+* 54b9b0e - Kacoew, 22 minutes ago : pdf og git_log
+* 86008d7 - Kacoew, 29 minutes ago : Task 4-5 texts, fixed tests, requirements.txt, rerun outputs
+* 9fa9c82 - Seline Heggelund Knutsen, 68 minutes ago : small change
+* 9182201 - Seline Heggelund Knutsen, 73 minutes ago : Ai erklæring
 * fb36893 - Seline Heggelund Knutsen, 4 hours ago : Discussion added to task 4 and 5
-* 0cb675c - Seline Heggelund Knutsen, 17 hours ago : task 5
-* 55a8fea - Seline Heggelund Knutsen, 18 hours ago : task 4.4
-* e46ab26 - Seline Heggelund Knutsen, 19 hours ago : task 4.3
+* 0cb675c - Seline Heggelund Knutsen, 18 hours ago : task 5
+* 55a8fea - Seline Heggelund Knutsen, 19 hours ago : task 4.4
+* e46ab26 - Seline Heggelund Knutsen, 20 hours ago : task 4.3
 * 3e3fe1f - Seline Heggelund Knutsen, 20 hours ago : task 4.2
 * 4335903 - Seline Heggelund Knutsen, 21 hours ago : task 4.1
 * f37102e - Kacoew, 2 days ago : 1to3ready
