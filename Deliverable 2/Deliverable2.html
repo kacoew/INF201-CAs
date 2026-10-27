@@ -7983,9 +7983,48 @@ Return a list of dicts.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p><strong>Our solution:</strong> We use one regular expression with a named group for each of the six fields:</p>
-<pre><code>[2026-10-15 08:30:00] [POS_01] item=Latte price=4.50 EUR (SUCCESS)
- └──── timestamp ───┘  └─┬──┘       └─┬─┘       └┬─┘ └┬┘  └──┬──┘
-                    register_id     item      price currency status</code></pre>
+<p>Example: <code>[2026-10-15 08:30:00] [POS_01] item=Latte price=4.50 EUR (SUCCESS)</code></p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Value in the example</th>
+<th>Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>timestamp</code></td>
+<td><code>2026-10-15 08:30:00</code></td>
+<td><code>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}</code></td>
+</tr>
+<tr>
+<td><code>register_id</code></td>
+<td><code>POS_01</code></td>
+<td><code>\w+</code></td>
+</tr>
+<tr>
+<td><code>item</code></td>
+<td><code>Latte</code></td>
+<td><code>\w+</code></td>
+</tr>
+<tr>
+<td><code>price</code></td>
+<td><code>4.50</code></td>
+<td><code>\d+\.\d+</code></td>
+</tr>
+<tr>
+<td><code>currency</code></td>
+<td><code>EUR</code></td>
+<td><code>[A-Z]{3}</code></td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>SUCCESS</code></td>
+<td>SUCCESS, REFUND or CANCELLED</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -8253,7 +8292,7 @@ that appears several times is only stored once.</p>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>{'POS_01', 'POS_02', 'POS_03'}
+<pre>{'POS_02', 'POS_03', 'POS_01'}
 </pre>
 </div>
 </div>
@@ -8523,7 +8562,7 @@ instead of an error or <code>NaN</code>, which shows that ε prevents division b
 <span class="n">df</span><span class="p">[</span><span class="s2">"price"</span><span class="p">]</span> <span class="o">=</span> <span class="n">remove_price_outliers</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"price"</span><span class="p">])</span>   <span class="c1"># remove the 999.00 glitches (Task 3.1)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Index type:"</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="s2">"| sorted:"</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">is_monotonic_increasing</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -8551,47 +8590,7 @@ timestamp
 2026-10-15 09:06:34      POS_01    Espresso   2.79      NOK    SUCCESS
 
 [80 rows x 5 columns]
-DatetimeIndex(['2026-10-15 07:01:21', '2026-10-15 07:04:07',
-               '2026-10-15 07:04:36', '2026-10-15 07:06:18',
-               '2026-10-15 07:08:44', '2026-10-15 07:11:20',
-               '2026-10-15 07:11:35', '2026-10-15 07:12:59',
-               '2026-10-15 07:15:20', '2026-10-15 07:17:51',
-               '2026-10-15 07:18:53', '2026-10-15 07:19:10',
-               '2026-10-15 07:19:28', '2026-10-15 07:19:57',
-               '2026-10-15 07:22:53', '2026-10-15 07:24:30',
-               '2026-10-15 07:27:29', '2026-10-15 07:28:47',
-               '2026-10-15 07:29:44', '2026-10-15 07:30:11',
-               '2026-10-15 07:32:28', '2026-10-15 07:35:01',
-               '2026-10-15 07:36:33', '2026-10-15 07:37:28',
-               '2026-10-15 07:39:39', '2026-10-15 07:42:23',
-               '2026-10-15 07:45:02', '2026-10-15 07:45:29',
-               '2026-10-15 07:46:05', '2026-10-15 07:48:24',
-               '2026-10-15 07:50:42', '2026-10-15 07:51:29',
-               '2026-10-15 07:52:28', '2026-10-15 07:54:59',
-               '2026-10-15 07:56:06', '2026-10-15 07:57:29',
-               '2026-10-15 08:00:20', '2026-10-15 08:01:51',
-               '2026-10-15 08:04:47', '2026-10-15 08:06:24',
-               '2026-10-15 08:07:54', '2026-10-15 08:09:37',
-               '2026-10-15 08:11:59', '2026-10-15 08:12:58',
-               '2026-10-15 08:14:25', '2026-10-15 08:16:21',
-               '2026-10-15 08:16:49', '2026-10-15 08:19:21',
-               '2026-10-15 08:22:05', '2026-10-15 08:24:09',
-               '2026-10-15 08:25:00', '2026-10-15 08:26:33',
-               '2026-10-15 08:28:07', '2026-10-15 08:28:19',
-               '2026-10-15 08:30:54', '2026-10-15 08:33:33',
-               '2026-10-15 08:34:49', '2026-10-15 08:36:20',
-               '2026-10-15 08:36:36', '2026-10-15 08:38:39',
-               '2026-10-15 08:39:37', '2026-10-15 08:41:05',
-               '2026-10-15 08:42:36', '2026-10-15 08:43:39',
-               '2026-10-15 08:45:51', '2026-10-15 08:48:05',
-               '2026-10-15 08:48:59', '2026-10-15 08:51:40',
-               '2026-10-15 08:52:58', '2026-10-15 08:54:27',
-               '2026-10-15 08:54:50', '2026-10-15 08:56:25',
-               '2026-10-15 08:58:30', '2026-10-15 08:59:13',
-               '2026-10-15 09:00:32', '2026-10-15 09:01:51',
-               '2026-10-15 09:03:14', '2026-10-15 09:05:51',
-               '2026-10-15 09:06:05', '2026-10-15 09:06:34'],
-              dtype='datetime64[us]', name='timestamp', freq=None)
+Index type: DatetimeIndex | sorted: True
 </pre>
 </div>
 </div>
@@ -9071,8 +9070,7 @@ Name: total_revenue, dtype: float64
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Task-5-%E2%80%93-Full-workflow">Task 5 – Full workflow<a class="anchor-link" href="#Task-5-%E2%80%93-Full-workflow">¶</a></h2><ol>
-<li>Find log files + active register IDs → 2. read &amp; parse → 3. DataFrame → 4. outlier cleaning →</li>
-<li>NOK × 10 → 6. reports → 7. save the 4 output files.</li>
+<li>Find log files + active register IDs → 2. read &amp; parse → 3. DataFrame → 4. outlier cleaning → 5. NOK × 10 → 6. reports → 7. save the 4 output files.</li>
 </ol>
 </div>
 </div>
@@ -9204,13 +9202,7 @@ Name: total_revenue, dtype: float64
 <pre>Found 9 log files.
 Found 3 active registers.
 Parsed 720 active transactions.
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>All reports have been saved successfully.
+All reports have been saved successfully.
 Output folder: output
 </pre>
 </div>
@@ -9300,6 +9292,20 @@ cleaned_transactions.csv
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p><strong>What the output shows:</strong> All 9 log files and 720 transactions are processed. No transactions are removed by the active-register filter, because POS_01–POS_03 are all active (see Task 2.2). After cleaning, prices range from 2.52 to 79.60. The mean NOK price is 45.15, about ten times the EUR (4.37) and USD (4.30) means, which shows that the currency correction worked. The hourly report has 18 entries (6 items × 3 hours). Sandwich has the highest SUCCESS revenue (2562.14), Espresso has the highest refund ratio (0.37) and Muffin the lowest (0.16).</p>
 <p>Because NOK prices are about ten times larger than EUR and USD prices, NOK sales dominate the revenue totals. The totals mix currencies and should not be read as revenue in one currency.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b21881f1">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Discussion">Discussion<a class="anchor-link" href="#Discussion">¶</a></h2><p>The pipeline successfully processes the log files and generates four output reports. The encoding test shows that the file reader supports both UTF-8 and ISO-8859-1, although the generated log files contain only ASCII characters.</p>
+<p>One limitation is that the hourly revenue report includes all transaction statuses and currencies. Refunds and cancelled transactions can therefore affect the totals, and different currencies are not directly comparable. The totals should not be interpreted as actual net revenue.</p>
+<p>The 3σ rule helps identify extreme prices, but it may miss outliers or incorrectly flag valid prices. Outliers are removed before the NOK correction so that unusually high NOK values do not become even larger when multiplied by 10. However, this assumes that the outlier detection works correctly on the original prices.</p>
+<p>Overall, the pipeline automates data cleaning and reporting, but the results must be interpreted with these limitations in mind.</p>
 </div>
 </div>
 </div>
