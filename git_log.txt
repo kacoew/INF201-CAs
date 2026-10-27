@@ -1,0 +1,25 @@
+* 86008d7 - Kacoew, 3 minutes ago : Task 4-5 texts, fixed tests, requirements.txt, rerun outputs
+* 9fa9c82 - Seline Heggelund Knutsen, 41 minutes ago : small change
+* 9182201 - Seline Heggelund Knutsen, 46 minutes ago : Ai erklæring
+* fb36893 - Seline Heggelund Knutsen, 4 hours ago : Discussion added to task 4 and 5
+* 0cb675c - Seline Heggelund Knutsen, 17 hours ago : task 5
+* 55a8fea - Seline Heggelund Knutsen, 18 hours ago : task 4.4
+* e46ab26 - Seline Heggelund Knutsen, 19 hours ago : task 4.3
+* 3e3fe1f - Seline Heggelund Knutsen, 20 hours ago : task 4.2
+* 4335903 - Seline Heggelund Knutsen, 20 hours ago : task 4.1
+* f37102e - Kacoew, 2 days ago : 1to3ready
+* 07f2e95 - Kacoew, 2 days ago : updates
+* 97849b3 - Kacoew, 2 days ago : Task 1 and 2
+* 8ddd4a5 - Kacoew, 7 days ago : klart?
+* b274451 - Kacoew, 7 days ago : updates
+* d1a0738 - Kacoew, 7 days ago : Fjern C:\-mappe som stoppet pull på Windows, lagre data i Deliverable 2/data
+* 0f6fb80 - Kacoew, 7 days ago : update
+* 9dcd1c5 - Kacoew, 7 days ago : work?
+* 681d7fd - Kacoew, 7 days ago : uten req
+* 9b18193 - Kacoew, 7 days ago : good?
+* c181a47 - Kacoew, 7 days ago : mal
+* b8d5309 - Kacoew, 7 days ago : mal
+* 4a2b101 - Kacoew, 7 days ago : update
+* 2c7fccf - Kacoew, 7 days ago : update
+* 5346f54 - Kacoew, 7 days ago : update
+* d2f3beb - Kacoew, 7 days ago : oppgavene
