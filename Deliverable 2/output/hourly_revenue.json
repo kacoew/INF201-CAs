@@ -2,91 +2,91 @@
   {
     "item":"Cappuccino",
     "timestamp":"2026-10-15 07:00:00",
-    "total_revenue":827.31
+    "total_revenue":849.64
   },
   {
     "item":"Cappuccino",
     "timestamp":"2026-10-15 08:00:00",
-    "total_revenue":827.78
+    "total_revenue":890.42
   },
   {
     "item":"Cappuccino",
     "timestamp":"2026-10-15 09:00:00",
-    "total_revenue":154.47
+    "total_revenue":8.15
   },
   {
     "item":"Croissant",
     "timestamp":"2026-10-15 07:00:00",
-    "total_revenue":810.96
+    "total_revenue":906.005
   },
   {
     "item":"Croissant",
     "timestamp":"2026-10-15 08:00:00",
-    "total_revenue":812.14
+    "total_revenue":1179.9
   },
   {
     "item":"Croissant",
     "timestamp":"2026-10-15 09:00:00",
-    "total_revenue":211.02
+    "total_revenue":194.21
   },
   {
     "item":"Espresso",
     "timestamp":"2026-10-15 07:00:00",
-    "total_revenue":658.64
+    "total_revenue":827.675
   },
   {
     "item":"Espresso",
     "timestamp":"2026-10-15 08:00:00",
-    "total_revenue":763.25
+    "total_revenue":668.31
   },
   {
     "item":"Espresso",
     "timestamp":"2026-10-15 09:00:00",
-    "total_revenue":119.88
+    "total_revenue":99.37
   },
   {
     "item":"Latte",
     "timestamp":"2026-10-15 07:00:00",
-    "total_revenue":791.01
+    "total_revenue":984.885
   },
   {
     "item":"Latte",
     "timestamp":"2026-10-15 08:00:00",
-    "total_revenue":1076.94
+    "total_revenue":961.35
   },
   {
     "item":"Latte",
     "timestamp":"2026-10-15 09:00:00",
-    "total_revenue":163.22
+    "total_revenue":62.22
   },
   {
     "item":"Muffin",
     "timestamp":"2026-10-15 07:00:00",
-    "total_revenue":894.87
+    "total_revenue":1005.76
   },
   {
     "item":"Muffin",
     "timestamp":"2026-10-15 08:00:00",
-    "total_revenue":877.22
+    "total_revenue":592.13
   },
   {
     "item":"Muffin",
     "timestamp":"2026-10-15 09:00:00",
-    "total_revenue":172.01
+    "total_revenue":161.92
   },
   {
     "item":"Sandwich",
     "timestamp":"2026-10-15 07:00:00",
-    "total_revenue":1764.05
+    "total_revenue":2624.22
   },
   {
     "item":"Sandwich",
     "timestamp":"2026-10-15 08:00:00",
-    "total_revenue":1332.59
+    "total_revenue":1396.63
   },
   {
     "item":"Sandwich",
     "timestamp":"2026-10-15 09:00:00",
-    "total_revenue":255.7
+    "total_revenue":238.14
   }
 ]
