@@ -1,84 +1,117 @@
 """
-Object-oriented game simulator
-Based on game_simulator_v1.py by Turid Torheim, NMBU, 2026
-Owner: Person A (Task 1, Character-delen av Task 3, Task 4)
-
-=====================================================================
-OPPGAVEN
-=====================================================================
-Task 1 – Rett opp Character-klassen
-  Problemet i startkoden: attack() endrer target._hp direkte. Det er
-  dårlig skikk å endre et annet objekts private attributt. Hvert objekt
-  skal selv passe på sin egen tilstand.
-    * take_damage(amount): karakteren tar skade på SIN EGEN HP.
-    * heal(amount): karakteren øker SIN EGEN HP.
-    * attack(target): kaller target.take_damage(...) i stedet for å
-      røre target._hp.
-    * is_alive: read-only property, True hvis HP > 0, ellers False.
-  Regel: HP skal alltid ligge mellom 0 og hp_max.
-
-Task 3 – Character-delen
-    * __init__ tar imot et valgfritt våpen (standard: ingen).
-    * Har karakteren et våpen, kastes våpenets terning i attack().
-      Ellers brukes base damage (self.damage).
-
-Task 4 – Spesialiserte subklasser
-  Warrior (forsvar):
-    * Nytt attributt armor, standard 5.
-    * Overstyr take_damage(): trekk armor fra innkommende skade før den
-      brukes. Skaden kan ikke bli negativ (ellers ville angrep helbrede).
-  Mage (ressurser):
-    * Nye attributter mana og mana_max, begge standard 30.
-    * Overstyr attack():
-        - Mana >= 10: bruk 10 mana og gjør et magisk angrep med DOBBEL
-          skade. Magi bruker IKKE våpen, selv om magen har et.
-          (Tolkning å avklare: dobbel base damage, dvs. 2 * self.damage.)
-        - Mana < 10: vanlig angrep (med våpen hvis utstyrt), og få
-          tilbake 5 mana (ikke over mana_max).
-
-=====================================================================
-BEGREPER DU TRENGER
-=====================================================================
-  * Innkapsling: _hp med understrek betyr "privat, ikke rør utenfra".
-    Lesing skjer via property-en hp, endring kun via take_damage/heal.
-  * @property uten setter er read-only: forsøk på å sette verdien gir
-    AttributeError. Det er nettopp det dere vil for hp og is_alive.
-  * Arv ("er en"): en Warrior ER EN Character. Den får alle metodene
-    gratis og overstyrer bare det som skal være annerledes.
-  * super(): bruk super().__init__(...) i subklassene så Character
-    setter opp navn, HP osv. – ikke kopier den koden. I overstyrte
-    metoder kan super().take_damage(...) / super().attack(...) gjenbruke
-    logikken i foreldreklassen.
-  * Polymorfisme: attack() kaller target.take_damage(). Er target en
-    Warrior, kjøres Warrior sin versjon automatisk. Angriperen trenger
-    ikke vite hvilken type målet er.
-
-=====================================================================
-FREMGANGSMÅTE
-=====================================================================
-  1. Task 1 først, i rekkefølge:
-       a. take_damage: trekk fra, og sørg for at HP ikke går under 0.
-       b. heal: legg til, og sørg for at HP ikke går over hp_max.
-          Vurder hva som skal skje med negative tall (ValueError?).
-       c. is_alive: property som sammenligner HP med 0.
-       d. attack: finn skaden, og la målet ta skaden selv.
-       e. Fiks __repr__ (se TODO der).
-  2. Task 3: lagre våpenet i __init__ og skriv hjelpemetoden
-     roll_attack_damage(). Den svarer på "hvor mye skade gjør jeg nå?"
-     og brukes av attack(). Da kan Mage gjenbruke den.
-     Tips: Person B sin Weapon er kanskje ikke ferdig ennå. Du kan teste
-     med et enkelt hjemmelaget objekt som har en roll_damage()-metode.
-  3. Task 4, Warrior: __init__ med super() + armor, deretter
-     take_damage som reduserer skaden og lar super() gjøre resten.
-  4. Task 4, Mage: __init__ med super() + mana/mana_max, deretter
-     attack med de to grenene. Pass på at mana aldri går over mana_max.
-  5. Test hver metode alene før dere kobler på Battle:
-       - En karakter med 100 HP som tar 150 skade ender på 0, ikke -50.
-       - Heal på en karakter med full HP gir fortsatt hp_max.
-       - is_alive er False ved 0 HP, og kan ikke settes utenfra.
-       - Å sette hp direkte utenfra gir AttributeError.
-       - En Warrior med armor 5 som tar 3 skade mister 0 HP.
-       - En Mage gjør 20, 20, 20 skade (bruker 30 mana), deretter vanlig
-         angrep og får +5 mana hver gang til den har 10 igjen.
-       - En Mage med våpen bruker IKKE våpenet når den kaster magi.
+Object-oriented game simulator - Based on game_simulator_v1.py by Turid Torheim, NMBU, 2026
+Character.py is an updated version of the original, with a Weapon class added. The Weapon class is in items.py, and the Dice class is in dice.py.
+Task 1: Character class and Task 3: Weapon class are implemented in this file. The Character class can now take a Weapon object and use it in attacks.
+Task 1 says make a Character class with attributes for name, hp_max, damage, and methods for attack, take_damage, heal, and introduce. 
+Task 3 adds the ability for a Character to have a Weapon, which uses a Dice object to determine damage.
 """
+
+# Task 1 + Task 3: Character class with Weapon support
+
+from items import Weapon
+
+
+class Character:
+    """Represents a character in the RPG."""
+
+    def __init__(self, name: str, hp_max: int = 100, damage: int = 10, 
+                 weapon: Weapon | None = None) -> None:
+        """
+        Initialise the Character.
+
+        Args:
+            name (str): The name of the character.
+            hp_max (int): Max hit points (default = 100).
+            damage (int): Base damage when attacking without a weapon (default = 10).
+            weapon (Weapon | None): Optional equipped weapon (default = None).
+        """
+        self.name = name
+        self.hp_max = hp_max
+        self._hp = hp_max  # private: only changed by take_damage() and heal()
+        self.damage = damage
+        self.weapon = weapon
+
+    @property
+    def hp(self) -> int:
+        """Current hit points (read-only)."""
+        return self._hp
+
+    @property
+    def is_alive(self) -> bool:
+        """True if the character has more than 0 HP (read-only)."""
+        return self._hp > 0
+
+    def take_damage(self, amount: int) -> None:
+        """Reduce own HP by ``amount``. HP never goes below 0."""
+        if amount < 0:
+            raise ValueError("Damage cannot be negative")
+        self._hp = max(self._hp - amount, 0)
+
+    def heal(self, amount: int) -> None:
+        """Increase own HP by ``amount``. HP never goes above hp_max."""
+        if amount < 0:
+            raise ValueError("Healing cannot be negative")
+        if not self.is_alive:
+            return  # a dead character cannot be healed (our choice)
+        self._hp = min(self._hp + amount, self.hp_max)
+
+    def roll_attack_damage(self) -> int:
+        """Return how much damage this character deals right now."""
+        if self.weapon is not None:
+            return self.weapon.roll_damage()
+        return self.damage
+
+    def attack(self, target: "Character") -> int:
+        """Attack ``target`` and return the damage dealt."""
+        damage = self.roll_attack_damage()
+        target.take_damage(damage)
+        return damage
+
+    def introduce(self) -> None:
+        """Print a short introduction."""
+        print(f"Hi, my name is {self.name}!")
+
+    def __repr__(self) -> str:
+        """Representation of the character object."""
+        return f"<{type(self).__name__} name={self.name} hp={self.hp} damage={self.damage}>"
+
+    def __str__(self) -> str:
+        """Readable description of the character."""
+        return f"{type(self).__name__}: {self.name} with {self.hp} HP and {self.damage} damage"
+
+
+if __name__ == "__main__":
+    from dice import Dice  # only needed for the tests below
+
+    # Task 1 tests
+    c = Character("Test")
+    c.take_damage(150)
+    print(c.hp, c.is_alive)              # expected: 0 False
+
+    c = Character("Test")
+    c.take_damage(30)
+    c.heal(50)
+    print(c.hp)                          # expected: 100 (not 120)
+
+    link = Character("Link")
+    sauron = Character("Sauron")
+  
+    link.attack(sauron)
+    print(sauron.hp)                     # expected: 90
+
+    try:
+        sauron.hp = 999
+    except AttributeError as error:
+        print("AttributeError:", error)  # expected: hp cannot be set from outside
+
+    try:
+        c.take_damage(-5)
+    except ValueError as error:
+        print("ValueError:", error)      # expected: Damage cannot be negative
+
+    # Task 3 tests
+    dummy = Character("Dummy", hp_max=1000)
+    a = Character("A")
+    print("Damage on dummy (no weapon):  ", [a.attack(dummy) for _ in range(5)])   # always 10
+    zelda = Character("Zelda", weapon=Weapon("Sword", Dice(20)))
+    print("Damage on dummy with weapon:", [zelda.attack(dummy) for _ in range(5)])            # random 1-20
