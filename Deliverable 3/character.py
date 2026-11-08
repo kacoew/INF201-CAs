@@ -4,6 +4,9 @@ Character.py is an updated version of the original, with a Weapon class added. T
 Task 1: Character class and Task 3: Weapon class are implemented in this file. The Character class can now take a Weapon object and use it in attacks.
 Task 1 says make a Character class with attributes for name, hp_max, damage, and methods for attack, take_damage, heal, and introduce. 
 Task 3 adds the ability for a Character to have a Weapon, which uses a Dice object to determine damage.
+Task 4 adds two specialised subclasses:
+- Warrior: reduces incoming damage using armor
+- Mage: uses mana to cast magical attacks that deal double damage
 """
 
 # Task 1 + Task 3: Character class with Weapon support
@@ -114,4 +117,101 @@ if __name__ == "__main__":
     a = Character("A")
     print("Damage on dummy (no weapon):  ", [a.attack(dummy) for _ in range(5)])   # always 10
     zelda = Character("Zelda", weapon=Weapon("Sword", Dice(20)))
-    print("Damage on dummy with weapon:", [zelda.attack(dummy) for _ in range(5)])            # random 1-20
+    print("Damage on dummy with weapon:", [zelda.attack(dummy) for _ in range(5)])    # random 1-20
+
+# Task 4
+
+
+class Warrior(Character):
+    '''Defensive character that reduces incoming damage using armor'''
+    def __init__(self, name, hp_max: int=100, damage: int=10, weapon: Weapon | None = None, armor: int = 5) -> None:
+        '''
+        Initialise the Warrior
+
+            Args:
+                name (str): The name of the warrior
+                hp_max (int): Maximum hit points (default = 100)
+                damage (int): Base attack damage (default = 10)
+                weapon (Weapon | None): Optional equipped weapon
+                armor (int): Damage reduction applied to incoming attacks (default = 5)
+        '''
+        super().__init__(name, hp_max, damage, weapon)
+        self.armor = armor
+
+    def take_damage(self, amount: int) -> None:
+        '''
+        Reduce incoming damage by armor before applying it
+
+        Args:
+            amount (int): Incoming damage
+        '''
+        reduce_damage = max(0, amount - self.armor)
+        super().take_damage(reduce_damage)
+
+
+class Mage(Character):
+    '''Magic-based character that uses mana to cast powerful attacks'''
+    def __init__(self, name, hp_max: int = 100, damage: int = 10,
+                weapon: Weapon | None = None, mana: int = 30, mana_max: int = 30) -> None:
+        '''
+        Initialise the Mage
+
+        Args:
+            name (str): The name of the mage
+            hp_max (int): Maximum hit points (default = 100)
+            damage (int): Base attack damage (default = 10)
+            weapon (Weapon | None): Optional equipped weapon
+            mana (int): Current mana (default = 30)
+            mana_max (int): Maximum mana (default = 30)
+        '''
+        super().__init__(name, hp_max, damage, weapon)
+        self.mana = mana
+        self.mana_max = mana_max
+
+    def attack(self, target: 'Character') -> int:
+        '''
+        Attack a target
+
+        If the mage has at least 10 mana, a magical attack is used
+        The attack consumes 10 mana and deals double base damage
+
+        If the mage has less than 10 mana, a normal attack is used
+        and the mage restores 5 mana
+
+        Args:
+            target (Character): The target being attacked
+
+        Returns:
+            int: The damage dealt
+        '''
+        if self.mana >= 10:
+            self.mana -= 10
+
+            damage = 2 * self.damage
+            target.take_damage(damage)
+
+            return damage
+
+        else:
+            self.mana = min(self.mana + 5, self.mana_max)
+
+            return super().attack(target)
+
+# Test task 4
+# Task 4 tests
+
+
+warrior = Warrior("Aragorn")
+warrior.take_damage(10)
+print(warrior.hp)            # 95
+
+mage = Mage("Gandalf")
+orc = Character("Orc")
+
+print(mage.mana)             # 30
+print(mage.attack(orc))      # 20
+print(mage.mana)             # 20
+
+mage.mana = 5
+print(mage.attack(orc))      # vanlig angrep
+print(mage.mana)             # 10
