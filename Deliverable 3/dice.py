@@ -1,13 +1,17 @@
 """
 Dice class for the battle simulator
-This class represents a dice with a specified number of sides. It can be rolled to produce a random integer between 1 and the number of sides.
-The dice can also be called as a function to roll it, and it has a string representation for easy debugging and display.
-The Dice class is used in conjunction with the Weapon class to determine the damage dealt by weapons in the battle simulator.
+This class represents a dice with a specified number of sides.
+It can be rolled to produce a random integer between 1 and the number of sides.
+The dice can also be called as a function to roll it, and it has a string
+representation for easy debugging and display.
+The Dice class is used in conjunction with the Weapon class to determine
+the damage dealt by weapons in the battle simulator.
 """
 
 # Task 2: Dice class
 
 import random
+
 
 class Dice:
 

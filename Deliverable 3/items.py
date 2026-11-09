@@ -45,5 +45,3 @@ if __name__ == "__main__":
         Weapon("Stick", 6)
     except TypeError as error:
         print("TypeError:", error)
-
-
