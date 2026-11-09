@@ -8,6 +8,8 @@ Character objects.
 """
 
 from character import Character, Warrior, Mage
+from items import Weapon
+from dice import Dice
 
 
 class Battle:
@@ -25,18 +27,16 @@ class Battle:
         self.enemy = enemy
 
     def play_round(self) -> None:
-        """
-        Play one round of combat.
-
-        The hero attacks first. If the enemy survives,
-        the enemy attacks the hero.
-        """
         hero_damage = self.hero.attack(self.enemy)
         print(f"{self.hero.name} deals {hero_damage} damage.")
+        print(f"{self.enemy.name}: {self.enemy.hp} HP")
 
         if self.enemy.is_alive:
             enemy_damage = self.enemy.attack(self.hero)
             print(f"{self.enemy.name} deals {enemy_damage} damage.")
+            print(f"{self.hero.name}: {self.hero.hp} HP")
+
+        print()
 
     def simulate_battle(self) -> Character:
         """
@@ -76,6 +76,22 @@ if __name__ == "__main__":
 
     battle = Battle(hero, enemy)
 
+    winner = battle.simulate_battle()
+
+    print(f"\nWinner: {winner.name}")
+    print(f"{hero.name}: {hero.hp} HP")
+    print(f"{enemy.name}: {enemy.hp} HP")
+
+    print("\n" + "-" * 30 + "\n")
+
+    # Test 3, battle with weapons
+    sword = Weapon("Anduril", Dice(20))
+    staff = Weapon("Wizard Staff", Dice(20))
+
+    hero = Warrior("Aragorn", weapon=sword)
+    enemy = Mage("Saruman", weapon=staff)
+
+    battle = Battle(hero, enemy)
     winner = battle.simulate_battle()
 
     print(f"\nWinner: {winner.name}")
