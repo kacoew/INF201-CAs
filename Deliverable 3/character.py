@@ -197,21 +197,21 @@ class Mage(Character):
 
             return super().attack(target)
 
-# Test task 4
 # Task 4 tests
 
 
-warrior = Warrior("Aragorn")
-warrior.take_damage(10)
-print(warrior.hp)            # 95
+if __name__ == "__main__":
+    warrior = Warrior("Aragorn")
+    warrior.take_damage(10)
+    print(warrior.hp)            # 95
 
-mage = Mage("Gandalf")
-orc = Character("Orc")
+    mage = Mage("Gandalf")
+    orc = Character("Orc")
 
-print(mage.mana)             # 30
-print(mage.attack(orc))      # 20
-print(mage.mana)             # 20
+    print(mage.mana)             # 30
+    print(mage.attack(orc))      # 20
+    print(mage.mana)             # 20
 
-mage.mana = 5
-print(mage.attack(orc))      # vanlig angrep
-print(mage.mana)             # 10
+    mage.mana = 5
+    print(mage.attack(orc))      # vanlig angrep
+    print(mage.mana)             # 10

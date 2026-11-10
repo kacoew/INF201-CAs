@@ -15,43 +15,50 @@ from dice import Dice
 class Battle:
     """Manages a turn-based battle between two characters."""
 
-    def __init__(self, hero: Character, enemy: Character) -> None:
+    def __init__(self, hero: Character, enemy: Character, max_rounds: int = 100) -> None:      # Battle has two characters
         """
         Initialise the Battle.
 
         Args:
             hero (Character): The player's character.
             enemy (Character): The opposing character.
+            max_rounds (int): Stop after this many rounds (default = 100).
         """
         self.hero = hero
         self.enemy = enemy
+        self.max_rounds = max_rounds
+        self.round = 0
 
     def play_round(self) -> None:
-        hero_damage = self.hero.attack(self.enemy)
+        """Hero attacks enemy; the enemy hits back only if still alive."""
+        self.round += 1
+        hero_damage = self.hero.attack(self.enemy)      # 1. hero always hits
         print(f"{self.hero.name} deals {hero_damage} damage.")
         print(f"{self.enemy.name}: {self.enemy.hp} HP")
 
-        if self.enemy.is_alive:
+        if self.enemy.is_alive:     # 2. enemy hits back only if alive
             enemy_damage = self.enemy.attack(self.hero)
             print(f"{self.enemy.name} deals {enemy_damage} damage.")
             print(f"{self.hero.name}: {self.hero.hp} HP")
 
         print()
 
-    def simulate_battle(self) -> Character:
+    def simulate_battle(self) -> Character | None:
         """
-        Run battle rounds until one character dies.
+        Run battle rounds until one character dies, or max_rounds is reached.
 
         Returns:
-            Character: The winning character.
+            Character | None: The winning character, or None if it is a draw.
         """
-        while self.hero.is_alive and self.enemy.is_alive:
+        while self.hero.is_alive and self.enemy.is_alive and self.round < self.max_rounds:       # 3. keep going while both live
             self.play_round()
 
-        if self.hero.is_alive:
-            return self.hero
+        if not self.enemy.is_alive:
+            return self.hero        # 4. return the winner
+        if not self.hero.is_alive:
+            return self.enemy
 
-        return self.enemy
+        return None  # both still alive after max_rounds
 
 
 if __name__ == "__main__":
