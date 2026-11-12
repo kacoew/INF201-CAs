@@ -1,3 +1,4 @@
+* d56813e - Kacoew, 8 seconds ago : Add PDF, update HTML and notebook
 * 65de607 - Kacoew, 3 minutes ago : done
 * 555a58a - Kacoew, 3 minutes ago : Add git log
 * 3df047c - Kacoew, 2 days ago : comments
