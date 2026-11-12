@@ -1,3 +1,5 @@
+* 65de607 - Kacoew, 3 minutes ago : done
+* 555a58a - Kacoew, 3 minutes ago : Add git log
 * 3df047c - Kacoew, 2 days ago : comments
 * d39192c - Kacoew, 2 days ago : comments
 * 4f23644 - Seline Heggelund Knutsen, 3 days ago : translation
