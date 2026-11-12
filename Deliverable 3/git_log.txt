@@ -1,0 +1,11 @@
+* 3df047c - Kacoew, 2 days ago : comments
+* d39192c - Kacoew, 2 days ago : comments
+* 4f23644 - Seline Heggelund Knutsen, 3 days ago : translation
+* dbe499f - Seline Heggelund Knutsen, 3 days ago : Header
+* 485326a - Seline Heggelund Knutsen, 3 days ago : Finishing touches
+* 387bc46 - Seline Heggelund Knutsen, 3 days ago : Task 5 finished with tests
+* 26d467b - Seline Heggelund Knutsen, 4 days ago : Task 4 finished and Task 5 started
+* 7c86d7f - Kacoew, 6 days ago : Task 1 og 3 done
+* 8e0f6fd - Seline Heggelund Knutsen, 8 days ago : dice class finished
+* 1de250c - Kacoew, 9 days ago : files added
+* 4f4e4c0 - Kacoew, 9 days ago : oppg added
