@@ -56,10 +56,7 @@ class Fraction:
         Returns:
             bool: True if the fractions are equal, otherwise False
         '''
-        return (
-            self.numerator * other.denominator ==
-            other.denominator * self.numerator
-        )
+        return self.numerator * other.denominator == other.numerator * self.denominator
 
     def __ne__(self, other: "Fraction") -> bool:
         """
@@ -71,7 +68,7 @@ class Fraction:
         Returns:
             bool: True if the fractions are not equal, otherwise False
         """
-        return not self == other
+        return not self.__eq__(other)
 
     def __lt__(self, other: "Fraction") -> bool:
         """
@@ -83,10 +80,7 @@ class Fraction:
         Returns:
             bool: True if this fraction is less than the other fraction
         """
-        return (
-            self.numerator * other.denominator
-            < other.numerator * self.denominator
-        )
+        return self.numerator * other.denominator < other.numerator * self.denominator
 
     def __le__(self, other: "Fraction") -> bool:
         """
@@ -110,7 +104,7 @@ class Fraction:
         Returns:
             bool: True if this fraction is greater than the other fraction
         """
-        return not self <= other
+        return self.numerator * other.denominator > other.numerator * self.denominator
 
     def __ge__(self, other: "Fraction") -> bool:
         """

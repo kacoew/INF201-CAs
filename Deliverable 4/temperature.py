@@ -26,4 +26,3 @@ class Temperature:
             raise ValueError(f"Invalid unit '{unit}'. Valid units are {VALID_UNITS}.")
         self.value = value
         self.unit = unit
-
