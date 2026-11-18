@@ -1,146 +1,212 @@
-## Task 1: Temperatures
+"""
+INF201 - Deliverable 4
+Task 1: Temperature Class
 
-    # Create a `Temperature` class that supports Celsius ("C"), Fahrenheit ("F"), and Kelvin ("K"). This class should:
-    # 1. Be initialised with a value and a unit (case-insensitive), and raise a `ValueError` if the unit is not one of "C", "F" or "K", or if the temperature is below absolute zero (0 K).
-    # 2. Use a tolerance of 1e-9 for floating-point value comparisons
-    # 3. Expose `value` and `unit` as read-only attributes
-    # 4. Contain the following conversion methods:
-    #     * `to_celsius(self) -> float`:
-    #         * From Kelvin: $C = K - 273.15$
-    #         * From Fahrenheit: $C = (F - 32) \times \frac{5}{9}$
-    #     * `to_fahrenheit(self) -> float`:
-    #         * From Celsius: $F = C \times \frac{9}{5} + 32$
-    #         * From Kelvin: $F = (K - 273.15) \times \frac{9}{5} + 32$
-    #     * `to_kelvin(self) -> float`:
-    #         * From Celsius: $K = C + 273.15$
-    #         * From Fahrenheit: $K = (F - 32) \times \frac{5}{9} + 273.15$
-    # * `convert_to(self, target_unit: str) -> Temperature`:
-    #         * Returns a new `Temperature` instance converted to `target_unit` (case-insensitive), raising `ValueError` if `target_unit` is invalid.
-    # 5. Contain the following string representations:
-    #     * `__repr__(self) -> str`: Returns an unambiguous representation, such as `Temperature(25.0, 'C')`.
-    #     * `__str__(self) -> str`: Returns a human-readable string formatted to two decimal places, such as `25.00 °C`.
-    # 6. Contain all six comparisons (==, !=, <, <=, >, >=) so temperatures can be compared across different units (`Temperature(0, "C") == Temperature(32, "F")`). Should return `NotImplemented` if a `Temperature` instance is compared to a non-Temperature instance.
+A Python class for representing, converting, and comparing
+temperatures in Celsius (C), Fahrenheit (F), and Kelvin (K).
 
-    # Write a `test_temperature.py` script that imports the `Temperature` class and uses pytest for the following tests:
-    # 1. Initialization: Default unit, case-insensitive units, and read-only behavior.
-    # 2. Validation: Invalid unit strings and temperatures below absolute zero in "C", "F", and "K".
-    # 3. Conversions: Test conversion accuracy across reference points:
-    #     * Absolute zero ($-273.15^\circ\text{C} = -459.67^\circ\text{F} = 0\text{ K}$)
-    #     * Celsius–Fahrenheit crossover ($-40^\circ\text{C} = -40^\circ\text{F} = 233.15\text{ K}$)
-    #     * Freezing point of water ($0^\circ\text{C} = 32^\circ\text{F} = 273.15\text{ K}$)
-    #     * Human body temperature ($37^\circ\text{C} = 98.6^\circ\text{F} = 310.15\text{ K}$)
-    #     * Boiling point of water ($100^\circ\text{C} = 212^\circ\text{F} = 373.15\text{ K}$)
-    # 4. Round-trip conversions: Converting "C" -> "F" -> "K" -> "C" reproduces the original Temperature.
-    # 5. Cross-unit comparisons: Equality and ordering (<, <=, >, >=) across mixed units.
-    # 6. Formatting: Outputs of `str()` and `repr()`
+Features:
+    1. Initialization and validation:
+       - Default unit: Celsius
+       - Case-insensitive units, only C, F and K are accepted
+       - Rejects temperatures below absolute zero (0 K)
 
-"""Temperature class with unit conversion and cross-unit comparison (Task 1)."""
+    2. Tolerance:
+       - Uses an absolute tolerance of 1e-9 for float comparisons
 
-# 1. IMPORTS
+    3. Read-only value and unit attributes
 
+    4. Temperature conversions:
+       - to_celsius(), to_fahrenheit(), to_kelvin()
+       - convert_to(target_unit)
+
+    5. String representations:
+       - __str__(): Human-readable temperature
+       - __repr__(): Unambiguous object representation
+
+    6. Comparison operators:
+       - ==, !=, <, <=, >, >= across different units
+"""
+
+
+# IMPORTS
+
+# lets us write "-> Temperature" inside the class before the class is finished
 from __future__ import annotations
 
-import math
 
-# 2. CONSTANTS
+# CONSTANTS
 
+# the only units the class accepts
 VALID_UNITS = ("C", "F", "K")
-TOLERANCE = 1e-9  # Task 1.2: tolerance for floating-point comparisons
 
-ABSOLUTE_ZERO = {
-    "C": -273.15,
-    "F": -459.67,
-    "K": 0
-}
+# two temperatures closer than this count as equal (floats are never exact)
+TOLERANCE = 1e-9
 
-# 3. TEMPERATURE CLASS
+
+# TEMPERATURE CLASS
 
 class Temperature:
     """A temperature with a value and unit."""
 
-    def __init__(self, value: float, unit: str) -> None:
+
+    # 1. INITIALIZATION AND VALIDATION
+
+    # runs when a new Temperature is made, e.g. Temperature(25, "c")
+    def __init__(self, value: float, unit: str = "C") -> None:
         """
         Initialise Temperature.
 
         Args:
             value (float): The temperature value.
-            unit (str): The unit of the temperature ("C", "F", or "K").
+            unit (str): The unit of the temperature ("C", "F", or "K"). Default is "C".
 
         Raises:
             ValueError: If the unit is not valid or if the temperature is below absolute zero.
         """
 
+        # save unit and value as private attributes (_ = not meant to be changed)
+        # float, so 25 is shown as 25.0
+        self._unit = self._check_unit(unit)
+        self._value = float(value)
+
+        # temp must not be below absolute zero, checked in kelvin so it works for all units
+        if self.to_kelvin() < -TOLERANCE:
+            raise ValueError("Temperature below absolute zero.")
+
+
+    # helper used by both __init__ and convert_to, so the unit check is only written once
+    def _check_unit(self, unit: str) -> str:
+        """Check that the unit is valid and return it in upper case."""
+
+        # unit must be a string, else .upper() crashes
+        if not isinstance(unit, str) or unit.upper() not in VALID_UNITS:
+            raise ValueError(f"Invalid unit {unit!r}. Valid units are {VALID_UNITS}.")
+
         # make unit case-insensitive
-        unit = unit.upper()
+        return unit.upper()
 
-        if unit not in VALID_UNITS:
-            raise ValueError(f"Invalid unit '{unit}'. Valid units are {VALID_UNITS}.")
-        self._value = value
-        self.unit = unit
 
-        #
+    # 2. TOLERANCE
 
-        if value < ABSOLUTE_ZERO[unit]:
-            raise ValueError(f"Temperature below absolute zero for unit '{unit}'.")
+    # true if the difference between a and b is at most 1e-9
+    def _is_close(self, a: float, b: float) -> bool:
+        """Check if two values are equal within the tolerance."""
+        return abs(a - b) <= TOLERANCE
+
+
+    # 3. READ-ONLY PROPERTIES
+
+    # @property lets us read temp.value and temp.unit,
+    # but there is no setter, so temp.value = 5 gives an AttributeError
 
     @property
     def value(self) -> float:
         """Return the temperature value."""
         return self._value
 
+    @property
+    def unit(self) -> str:
+        """Return the temperature unit."""
+        return self._unit
+
+
+    # 4. TEMPERATURE CONVERSIONS
+
+    # one formula for each unit
     def to_celsius(self) -> float:
         """Convert the temperature to Celsius."""
-        if self.unit == "C":
-            return self.value
-        elif self.unit == "F":
+        if self.unit == "F":
             return (self.value - 32) * 5 / 9
-        elif self.unit == "K":
+        if self.unit == "K":
             return self.value - 273.15
+        return self.value  # already celsius
 
+    # if already fahrenheit: return as it is, else go via celsius
     def to_fahrenheit(self) -> float:
         """Convert the temperature to Fahrenheit."""
-        if self.unit == "C":
-            return self.value * 9 / 5 + 32
-        elif self.unit == "F":
-            return self.value
-        elif self.unit == "K":
-            return (self.value - 273.15) * 9 / 5 + 32
+        if self.unit == "F":
+            return self.value  # already fahrenheit
+        return self.to_celsius() * 9 / 5 + 32  # via celsius
 
+    # if already kelvin: return as it is, else go via celsius
     def to_kelvin(self) -> float:
         """Convert the temperature to Kelvin."""
-        if self.unit == "C":
-            return self.value + 273.15
-        elif self.unit == "F":
-            return (self.value - 32) * 5 / 9 + 273.15
-        elif self.unit == "K":
-            return self.value
+        if self.unit == "K":
+            return self.value  # already kelvin
+        return self.to_celsius() + 273.15  # via celsius
 
+    # makes a NEW Temperature in the target unit, the original is not changed
     def convert_to(self, target_unit: str) -> Temperature:
         """Convert the temperature to the target unit and return a new Temperature instance."""
-        target_unit = target_unit.upper()
-        if target_unit not in VALID_UNITS:
-            raise ValueError(f"Invalid target unit '{target_unit}'. Valid units are {VALID_UNITS}.")
+        target_unit = self._check_unit(target_unit)
 
         if target_unit == "C":
             return Temperature(self.to_celsius(), "C")
-        elif target_unit == "F":
+        if target_unit == "F":
             return Temperature(self.to_fahrenheit(), "F")
-        elif target_unit == "K":
-            return Temperature(self.to_kelvin(), "K")
+        return Temperature(self.to_kelvin(), "K")
 
+
+    # 5. STRING REPRESENTATIONS
+
+    # for programmers: shows how the object was made, used by repr() and in lists
     def __repr__(self) -> str:
         """Return an unambiguous string representation of the Temperature."""
-        return f"Temperature({self.value}, '{self.unit}')"  
+        return f"Temperature({self.value!r}, {self.unit!r})"
 
+    # for people: two decimals and a unit sign, used by print() and str()
     def __str__(self) -> str:
         """Return a human-readable string representation of the Temperature."""
+        if self.unit == "K":
+            return f"{self.value:.2f} K"  # kelvin is written without °
         return f"{self.value:.2f} °{self.unit}"
 
-    #comparison methods
+
+    # 6. COMPARISON METHODS
+
+    # all comparisons are done in kelvin, so different units can be compared
+    # NotImplemented is returned if other is not a Temperature,
+    # then python decides (== gives False, < gives TypeError)
+
+    # ==  equal within the tolerance
     def __eq__(self, other: object) -> bool:
         """Check if two Temperature instances are equal."""
         if not isinstance(other, Temperature):
             return NotImplemented
-        return math.isclose(self.to_kelvin(), other.to_kelvin(), abs_tol=TOLERANCE)   
+        return self._is_close(self.to_kelvin(), other.to_kelvin())
 
+    # !=  the opposite of ==
+    def __ne__(self, other: object) -> bool:
+        """Check if two Temperature instances are not equal."""
+        if not isinstance(other, Temperature):
+            return NotImplemented
+        return not self == other
 
+    # <  colder, and not equal within the tolerance
+    def __lt__(self, other: object) -> bool:
+        """Check if this Temperature instance is less than another."""
+        if not isinstance(other, Temperature):
+            return NotImplemented
+        return self.to_kelvin() < other.to_kelvin() and not self == other
+
+    # <=  colder or equal (reuses < and ==)
+    def __le__(self, other: object) -> bool:
+        """Check if this Temperature instance is less than or equal to another."""
+        if not isinstance(other, Temperature):
+            return NotImplemented
+        return self < other or self == other
+
+    # >  warmer, and not equal within the tolerance
+    def __gt__(self, other: object) -> bool:
+        """Check if this Temperature instance is greater than another."""
+        if not isinstance(other, Temperature):
+            return NotImplemented
+        return self.to_kelvin() > other.to_kelvin() and not self == other
+
+    # >=  warmer or equal (reuses > and ==)
+    def __ge__(self, other: object) -> bool:
+        """Check if this Temperature instance is greater than or equal to another."""
+        if not isinstance(other, Temperature):
+            return NotImplemented
+        return self > other or self == other
