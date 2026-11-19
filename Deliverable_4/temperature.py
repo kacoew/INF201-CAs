@@ -14,7 +14,7 @@ Features:
     2. Tolerance:
        - Uses an absolute tolerance of 1e-9 for float comparisons
 
-    3. Read-only value and unit attributes
+    3. Expose value and unit as read-only attributes
 
     4. Temperature conversions:
        - to_celsius(), to_fahrenheit(), to_kelvin()
@@ -65,21 +65,20 @@ class Temperature:
             ValueError: If the unit is not valid or if the temperature is below absolute zero.
         """
 
-        # save unit and value as private attributes (_ = not meant to be changed)
-        # float, so 25 is shown as 25.0
+        # saves unit and value as private attributes (_ = not meant to be changed)
+        # float = 25 becomes 25.0
         self._unit = self._check_unit(unit)
         self._value = float(value)
 
-        # temp must not be below absolute zero, checked in kelvin so it works for all units
+        # temp must not be below absolute zero (0 K)
         if self.to_kelvin() < -TOLERANCE:
             raise ValueError("Temperature below absolute zero.")
 
 
-    # helper used by both __init__ and convert_to, so the unit check is only written once
     def _check_unit(self, unit: str) -> str:
         """Check that the unit is valid and return it in upper case."""
 
-        # unit must be a string, else .upper() crashes
+        # unit must be a string, and must be one of the valid units
         if not isinstance(unit, str) or unit.upper() not in VALID_UNITS:
             raise ValueError(f"Invalid unit {unit!r}. Valid units are {VALID_UNITS}.")
 
@@ -89,9 +88,8 @@ class Temperature:
 
     # 2. TOLERANCE
 
-    # true if the difference between a and b is at most 1e-9
     def _is_close(self, a: float, b: float) -> bool:
-        """Check if two values are equal within the tolerance."""
+        """Check if two values/floats are close enough to be considered equal."""
         return abs(a - b) <= TOLERANCE
 
 
@@ -137,6 +135,7 @@ class Temperature:
         return self.to_celsius() + 273.15  # via celsius
 
     # makes a NEW Temperature in the target unit, the original is not changed
+    # convert_to uses the same unit check as __init__, so it will raise ValueError for invalid units
     def convert_to(self, target_unit: str) -> Temperature:
         """Convert the temperature to the target unit and return a new Temperature instance."""
         target_unit = self._check_unit(target_unit)
