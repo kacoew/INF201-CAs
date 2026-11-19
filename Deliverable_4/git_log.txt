@@ -1,0 +1,11 @@
+* 260c280 - Kacoew, 2 minutes ago : Add PDF of the Deliverable 4 notebook
+* 3bd97db - Kacoew, 8 minutes ago : Add requirements.txt and Gen AI summary for Deliverable 4
+* 934ace6 - Kacoew, 24 minutes ago : test looked over
+* 895a54d - Kacoew, 2 hours ago : tast 1 done
+* 942dd18 - Kacoew, 17 hours ago : task 1 done
+* 2199bf9 - Kacoew, 20 hours ago : Task 1 updated
+* 77d0c37 - Seline Heggelund Knutsen, 2 days ago : ferdigstilling av oppgave 2
+* 22da918 - Seline Heggelund Knutsen, 3 days ago : Task 2 updated
+* 77ae4ba - Seline Heggelund Knutsen, 3 days ago : Task 2 started
+* 8851245 - Kacoew, 3 days ago : __init__ classes
+* 64425ab - Kacoew, 3 days ago : Oppsett laget
