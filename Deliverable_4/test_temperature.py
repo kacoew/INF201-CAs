@@ -38,7 +38,6 @@ REFERENCE_POINTS = [
 
 # 1. INITIALIZATION
 
-# no unit given -> celsius
 def test_default_unit():
     """Test that Celsius is the default unit."""
 
